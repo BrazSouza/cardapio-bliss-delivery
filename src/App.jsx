@@ -6,22 +6,23 @@ import { useState, useEffect } from 'react'
 function App() {
   // const [dark, setDark] = useState(true)
   const [showTooltip, setShowTooltip] = useState(true)
+  const [whatsIndex, setWhatsIndex] = useState(0)
 
   const imagens = [
-    'public/1.jpg',
-    'public/2.jpg',
-    'public/3.jpg',
-    'public/4.jpg',
-    'public/5.jpg',
-    'public/6.jpg',
-    'public/7.jpg',
-    'public/8.jpg',
-    'public/9.jpg',
-    'public/10.jpg',
-    'public/11.jpg',
-    'public/12.jpg',
-    'public/13.jpg',
-    'public/14.jpg',
+    '/1.jpg',
+    '/2.jpg',
+    '/3.jpg',
+    '/4.jpg',
+    '/5.jpg',
+    '/6.jpg',
+    '/7.jpg',
+    '/8.jpg',
+    '/9.jpg',
+    '/10.jpg',
+    '/11.jpg',
+    '/12.jpg',
+    '/13.jpg',
+    '/14.jpg',
   ]
 
   useEffect(() => {
@@ -33,11 +34,29 @@ function App() {
   }, [])
 
 
-  const handleWhatsAppClick = () => {
+  const WHATSAPP_NUMBERS = [
+    '5527997431069',
+    '5527996319533'
+  ]
+
+
+  const handleWhatsAppClick = (e) => {
+    e.preventDefault()
+
     if (!isIOS() && navigator.vibrate) {
       navigator.vibrate(30)
     }
+
+    const number = WHATSAPP_NUMBERS[whatsIndex]
+
+    window.open(
+      `https://wa.me/${number}?text=Olá,%20quero%20fazer%20um%20pedido!`,
+      '_blank'
+    )
+    // alterna para o próximo número
+    setWhatsIndex((prev) => (prev + 1) % WHATSAPP_NUMBERS.length)
   }
+
 
 
   const isIOS = () => {
@@ -62,13 +81,14 @@ function App() {
         />
       ))}
 
-      <a
-        href="https://wa.me/5599999999999?text=Olá,%20quero%20fazer%20um%20pedido!"
-        target="_blank"
+      <button
+        type='submit'
+        href="#"
         className="whatsapp-fab"
         aria-label="Fazer pedido no WhatsApp"
         onClick={handleWhatsAppClick}
       >
+
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="28"
@@ -83,7 +103,7 @@ function App() {
         <span className={`whatsapp-tooltip ${showTooltip ? 'tooltip-show' : ''}`}>
           Fazer pedido
         </span>
-      </a>
+      </button>
 
     </div>
   )
